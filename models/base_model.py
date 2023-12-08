@@ -15,7 +15,8 @@ class BaseModel:
                 if key != '__class__':
                     if key in ['created_at', 'updated_at']:
                         self.__dict__[key] = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                    self.__dict__[key] = value
+                    else:
+                        self.__dict__[key] = value
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()

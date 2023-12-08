@@ -63,8 +63,9 @@ class TestBaseModel(unittest.TestCase):
         expected_created_at = datetime.strptime(data['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
 
         # Debugging print statements
-        print("Actual created_at:", new_model.created_at)
-        print("Expected created_at:", expected_created_at)
+        print(f"Actual created_at: {new_model.created_at}")
+        print(f"Expected created_at: {expected_created_at}")
+
         # Check if attributes are set correctly
         self.assertEqual(new_model.id, 'test_id')
         self.assertEqual(new_model.created_at, expected_created_at)

@@ -65,17 +65,14 @@ class TestBaseModel(unittest.TestCase):
             'name': 'Test Model'
         }
 
-        new_model = BaseModel(**data)
-
-        # Check if attributes are set correctly
-        self.assertEqual(new_model.id, 'test_id')
-        self.assertEqual(new_model.created_at, datetime(2023, 1, 1, 12, 0, 0))
-        self.assertEqual(new_model.updated_at, datetime(2023, 1, 1, 12, 30, 0))
-        self.assertEqual(new_model.name, 'Test Model')
-
-        # Additional check for integration with FileStorage
         with patch('models.engine.file_storage.FileStorage.new') as mock_new:
             new_model = BaseModel(**data)
+
+            # Check if attributes are set correctly
+            self.assertEqual(new_model.id, 'test_id')
+            self.assertEqual(new_model.created_at, datetime(2023, 1, 1, 12, 0, 0))
+            self.assertEqual(new_model.updated_at, datetime(2023, 1, 1, 12, 30, 0))
+            self.assertEqual(new_model.name, 'Test Model')
 
             # Check if FileStorage new method is called
             mock_new.assert_called_once_with(new_model)

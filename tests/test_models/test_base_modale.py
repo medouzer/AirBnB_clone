@@ -60,11 +60,15 @@ class TestBaseModel(unittest.TestCase):
 
         new_model = BaseModel(**data)
 
+        # Convert the string representation to a datetime object
+        expected_created_at = datetime.strptime(data['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
+
         # Check if attributes are set correctly
         self.assertEqual(new_model.id, 'test_id')
-        self.assertEqual(new_model.created_at, datetime(2023, 1, 1, 12, 0, 0))
+        self.assertEqual(new_model.created_at, expected_created_at)
         self.assertEqual(new_model.updated_at, datetime(2023, 1, 1, 12, 30, 0))
         self.assertEqual(new_model.name, 'Test Model')
+
 
 
 if __name__ == '__main__':

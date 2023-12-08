@@ -13,10 +13,9 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
-                    if key in ['created_at', 'updated_at']:
-                        self.__dict__[key] = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                    else:
-                        setattr(self, key, value)    
+                    self.__dict__[key] = value
+                elif key in ['created_at', 'updated_at']:
+                    self.__dict__[key] = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")   
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()

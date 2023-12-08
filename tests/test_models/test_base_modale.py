@@ -1,14 +1,16 @@
 import unittest
 from unittest.mock import patch
 from datetime import datetime
-from models.base_model import BaseModel
+from models.base_model import BaseModel, FileStorage
+
 
 class TestBaseModel(unittest.TestCase):
 
+    @patch('models.storage', FileStorage())
     def test_base_model_init(self):
         """Test initialization of BaseModel."""
         new_model = BaseModel()
-        
+
         # Check attributes
         self.assertIsInstance(new_model.id, str)
         self.assertIsInstance(new_model.created_at, datetime)
@@ -62,6 +64,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_model.created_at, datetime(2023, 1, 1, 12, 0, 0))
         self.assertEqual(new_model.updated_at, datetime(2023, 1, 1, 12, 30, 0))
         self.assertEqual(new_model.name, 'Test Model')
+
 
 if __name__ == '__main__':
     unittest.main()

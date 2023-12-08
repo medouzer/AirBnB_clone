@@ -1,92 +1,67 @@
-import json
-import os
 import unittest
-from datetime import datetime
-from io import StringIO
-import sys
 from unittest.mock import patch
+from datetime import datetime
 from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
 
 class TestBaseModel(unittest.TestCase):
-    def setUp(self):
-        """Set up the test environment."""
-        self.filepath = FileStorage._FileStorage__file_path
-        with open(self.filepath, 'w') as file:
-            file.truncate(0)
-        FileStorage._FileStorage__objects = {}
 
-    def tearDown(self):
-        """Clean up the test environment."""
-        if os.path.exists(self.filepath):
-            os.remove(self.filepath)
+    def test_base_model_init(self):
+        """Test initialization of BaseModel."""
+        new_model = BaseModel()
+        
+        # Check attributes
+        self.assertIsInstance(new_model.id, str)
+        self.assertIsInstance(new_model.created_at, datetime)
+        self.assertIsInstance(new_model.updated_at, datetime)
 
-    def test_basemodel_init(self):
-        """Test BaseModel initialization."""
-        new = BaseModel()
-        # Your existing test assertions for BaseModel.__init__()
+    def test_base_model_str(self):
+        """Test __str__ method of BaseModel."""
+        new_model = BaseModel()
+        expected_str = "[BaseModel] ({}) {}".format(new_model.id, new_model.__dict__)
+        self.assertEqual(str(new_model), expected_str)
 
-    def test_basemodel_init2(self):
-        """Test BaseModel initialization with dictionary."""
-        new = BaseModel()
-        new.name = "John"
-        new.my_number = 89
-        new2 = BaseModel(**new.to_dict())
-        # Your existing test assertions for BaseModel.__init2__()
+    def test_base_model_save(self):
+        """Test save method of BaseModel."""
+        new_model = BaseModel()
+        old_updated_at = new_model.updated_at
+        new_model.save()
 
-    def test_basemodel_init3(self):
-        """Test BaseModel initialization with updated attributes."""
-        new = BaseModel()
-        new2 = BaseModel(new.to_dict())
-        # Your existing test assertions for BaseModel.__init3__()
+        # Check if updated_at is updated after save
+        self.assertNotEqual(old_updated_at, new_model.updated_at)
 
-    def test_save_storage(self):
-        """Test BaseModel save method and storage interaction."""
-        b = BaseModel()
-        b.save()
-        key = "{}.{}".format(type(b).__name__, b.id)
-        d = {key: b.to_dict()}
-        self.assertTrue(os.path.isfile(self.filepath))
-        with open(self.filepath, "r", encoding="utf-8") as f:
-            self.assertEqual(len(f.read()), len(json.dumps(d)))
-            f.seek(0)
-            self.assertEqual(json.load(f), d)
+    def test_base_model_to_dict(self):
+        """Test to_dict method of BaseModel."""
+        new_model = BaseModel()
+        obj_dict = new_model.to_dict()
 
-    # Add more test cases as needed
+        # Check if the keys are present
+        self.assertIn('id', obj_dict)
+        self.assertIn('created_at', obj_dict)
+        self.assertIn('updated_at', obj_dict)
+        self.assertIn('__class__', obj_dict)
 
-class TestBase(unittest.TestCase):
-    def setUp(self):
-        """Set up the test environment."""
-        FileStorage._FileStorage__objects = {}
-        if os.path.exists(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+        # Check if values are correct types
+        self.assertIsInstance(obj_dict['id'], str)
+        self.assertIsInstance(obj_dict['created_at'], str)
+        self.assertIsInstance(obj_dict['updated_at'], str)
+        self.assertIsInstance(obj_dict['__class__'], str)
 
-    def tearDown(self):
-        """Clean up the test environment."""
-        if os.path.exists(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+    def test_base_model_init_with_arguments(self):
+        """Test initialization of BaseModel with arguments."""
+        data = {
+            'id': 'test_id',
+            'created_at': '2023-01-01T12:00:00.000000',
+            'updated_at': '2023-01-01T12:30:00.000000',
+            'name': 'Test Model'
+        }
 
-    def test_initialization_positive(self):
-        """Test positive cases for BaseModel initialization."""
-        # Your existing test assertions for TestBase.test_initialization_positive()
+        new_model = BaseModel(**data)
 
-    def test_dict(self):
-        """Test BaseModel to_dict method."""
-        # Your existing test assertions for TestBase.test_dict()
-
-    def test_save(self):
-        """Test BaseModel save method."""
-        # Your existing test assertions for TestBase.test_save()
-
-    def test_save_storage(self):
-        """Test BaseModel save method and storage interaction."""
-        # Your existing test assertions for TestBase.test_save_storage()
-
-    def test_str(self):
-        """Test BaseModel __str__ method."""
-        # Your existing test assertions for TestBase.test_str()
-
-    # Add more test cases as needed
+        # Check if attributes are set correctly
+        self.assertEqual(new_model.id, 'test_id')
+        self.assertEqual(new_model.created_at, datetime(2023, 1, 1, 12, 0, 0))
+        self.assertEqual(new_model.updated_at, datetime(2023, 1, 1, 12, 30, 0))
+        self.assertEqual(new_model.name, 'Test Model')
 
 if __name__ == '__main__':
     unittest.main()

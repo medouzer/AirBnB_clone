@@ -22,17 +22,6 @@ class FileStorage:
         with open(self.__file_path, 'w', encoding='utf-8') as file:
             json.dump(data, file)
 
-    # def reload(self):
-    #     try:
-    #         with open(self.__file_path, 'r') as file:
-    #             data = json.load(file)
-    #             for key, obj_data in data.items():
-    #                 class_name = obj_data['__class__']
-    #                 del obj_data['__class__']
-    #                 obj_instance = eval(class_name)(**obj_data)
-    #                 self.__objects[key] = obj_instance
-    #     except FileNotFoundError:
-    #         pass
     def reload(self):
         try:
             with open(self.__file_path, 'r') as file:

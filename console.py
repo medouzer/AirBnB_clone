@@ -5,12 +5,13 @@ import cmd
 import json
 import models
 from models.base_model import BaseModel
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """ command that interpreter class"""
 
     prompt = '(hbnb) '
-    valid_classes = ["BaseModel"]
+    valid_classes = ["BaseModel", "User"]
 
     def do_quit(self, arg):
         """The command that exit the program\n"""
@@ -37,7 +38,7 @@ class HBNBCommand(cmd.Cmd):
         if arg not in self.valid_classes:
             print("** class doesn't exist **")
             return
-        new_instance = BaseModel()
+        new_instance = eval(arg)()
         new_instance.save()
         print(new_instance.id)
 

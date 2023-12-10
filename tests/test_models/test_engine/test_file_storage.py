@@ -37,9 +37,19 @@ class TestFileStorage(unittest.TestCase):
 
     def test_all_method(self):
         """Test the all() method of FileStorage"""
+        # Clear the storage
+        self.storage._FileStorage__objects = {}
+
+        # Create a new BaseModel
+        new_instance = BaseModel()
+        key = f"{new_instance.__class__.__name__}.{new_instance.id}"
+        self.storage.new(new_instance)
+        self.storage.save()
+
+        # Retrieve all objects
         all_objects = self.storage.all()
-        self.assertIsInstance(all_objects, dict)
-        self.assertEqual(all_objects, {})
+
+        self.assertEqual(all_objects, {key: new_instance})
 
     def test_new_method(self):
         """Test the new() method of FileStorage"""
@@ -87,7 +97,6 @@ class TestFileStorage(unittest.TestCase):
 
     #     self.storage.reload()
     #     self.assertEqual(self.storage.all(), {})
-
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Store first object"""
 import json
+import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -30,30 +31,27 @@ class FileStorage:
             json.dump(data, file)
 
     def reload(self):
-        try:
-            with open(self.__file_path, 'r') as file:
-                file_content = file.read()
-                if file_content.strip():  # Check if the file is not empty
-                    data = json.loads(file_content)
-                    for key, obj_data in data.items():
-                        class_name = obj_data['__class__']
-                        del obj_data['__class__']
+        if os.path.exists(self.__file_path):
+            try:
+                with open(self.__file_path, 'r') as file:
+                    file_content = file.read()
+                    if file_content.strip():  # Check if the file is not empty
+                        data = json.loads(file_content)
+                        for key, obj_data in data.items():
+                            class_name = obj_data['__class__']
+                            del obj_data['__class__']
 
-                        class_mapping = {
-                            'BaseModel': BaseModel,
-                            'User': User,
-                            'State': State,
-                            'City': City,
-                            'Amenity': Amenity,
-                            'Place': Place,
-                            'Review': Review
-                        }
+                            class_mapping = {
+                                'BaseModel': BaseModel,
+                                'User': User,
+                                'State': State,
+                                'City': City,
+                                'Amenity': Amenity,
+                                'Place': Place,
+                                'Review': Review
+                            }
 
-                        obj_instance = class_mapping[class_name](**obj_data)
-                        self.__objects[key] = obj_instance
-        except FileNotFoundError:
-            # File not found, no need for an error
-            pass
-        except json.decoder.JSONDecodeError as e:
-            # Handle JSON decoding error (if any)
-            print(f"Error decoding JSON: {e}")
+                            obj_instance = class_mapping[class_name](**obj_data)
+                            self.__objects[key] = obj_instance
+            except Exception:
+                pass

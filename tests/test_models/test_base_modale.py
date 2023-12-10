@@ -4,6 +4,7 @@ from datetime import datetime
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
+
 class TestBaseModel(unittest.TestCase):
 
     @patch('models.storage', FileStorage())
@@ -71,6 +72,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_model.created_at, expected_created_at)
         self.assertEqual(new_model.updated_at, datetime(2023, 1, 1, 12, 30, 0))
         self.assertEqual(new_model.name, 'Test Model')
+
 
 if __name__ == '__main__':
     unittest.main()

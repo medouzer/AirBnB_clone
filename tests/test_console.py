@@ -221,7 +221,7 @@
 
 # if __name__ == '__main__':
 #     unittest.main()
-#////////////
+# hgtzhbvgfcdrdfcfcut
 import unittest
 from unittest.mock import patch
 from io import StringIO
@@ -305,7 +305,7 @@ class TestHBNBCommandHelp(unittest.TestCase):
 
     def test_help_update(self):
         h = ("Updates an instance by adding or updating attribute\n"
-             "Usage: update <class name> <id> <attribute name> \"<attribute value>\"")
+             "Usage: update <class name> <id><attribute name> \"<attribute value>\"")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help update"))
             self.assertEqual(h, output.getvalue().strip())
@@ -425,7 +425,8 @@ class ConsoleTestCase(unittest.TestCase):
         for cmd in cmds:
             with patch('sys.stdout', new=StringIO()) as f:
                 HBNBCommand().onecmd(f"{cmd}")
-                expected = ['[{}] {}'.format(k, v) for k, v in storage.all().items()]
+                expected = ['[{}] {}'.format(k, v)
+                            for k, v in storage.all().items()]
                 self.assertEqual(expected, f.getvalue().strip())
 
         """ Testing Update Command """
@@ -434,14 +435,14 @@ class ConsoleTestCase(unittest.TestCase):
         for cmd in cmds:
             for clas in valid_classes:
                 with patch('sys.stdout', new=StringIO()) as f:
-                    HBNBCommand().onecmd(f"{cmd} {clas} {id_dict[clas]} name 'New Name'")
+                    HBNBCommand().onecmd(f"{cmd} {clas}{id_dict[clas]} name 'New Name'")
                     expected = 'New Name'
                     if clas == "User":
                         expected = "New Name"
                     # Add other expected outputs based on the class
-                    self.assertEqual(expected, getattr(storage.all()[f"{clas}.{id_dict[clas]}"], "name"))
+                    self.assertEqual(expected, getattr(storage.all()
+                                                       [f"{clas}.{id_dict[clas]}"], "name"))
 
-# ... (If you have other tests or code after this point)
 
 if __name__ == '__main__':
     unittest.main()

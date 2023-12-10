@@ -9,13 +9,14 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
     class_mapping = {
-        'BaseModel' : BaseModel,
-        'User' : User,
+        'BaseModel': BaseModel,
+        'User': User,
         'State': State,
         'City': City,
         'Amenity': Amenity,
@@ -26,7 +27,7 @@ class FileStorage:
     def all(self):
         """return the dictionary"""
         return self.__objects
-    
+
     def new(self, obj):
         """set in __objects"""
         key = "{}.{}".format(obj.__class__.__name__, obj.id)

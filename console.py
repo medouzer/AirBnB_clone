@@ -17,17 +17,18 @@ class HBNBCommand(cmd.Cmd):
     """ command that interpreter class"""
 
     prompt = '(hbnb) '
-    valid_classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
+    valid_classes = ["BaseModel", "User", "State", "City",
+                     "Amenity", "Place", "Review"]
 
     def do_quit(self, arg):
         """The command that exit the program\n"""
         return True
-    
+
     def do_EOF(self, arg):
         """Exit the program when EOF\n"""
         print("")
         return True
-    
+
     def emptyline(self):
         """Execute anything\n"""
         pass
@@ -96,8 +97,9 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] not in self.valid_classes:
             print("** class doesn't exist **")
         else:
-            print([str(all_objects[obj]) for obj in all_objects if args[0] in obj])
-        
+            print([str(all_objects[obj]) for obj in all_objects
+                   if args[0] in obj])
+
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = arg.split()
@@ -124,7 +126,6 @@ class HBNBCommand(cmd.Cmd):
         setattr(all_objects[key], args[2], eval(args[3]))
         models.storage.save()
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
-# hadi khotwa mohim 

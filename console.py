@@ -6,12 +6,18 @@ import json
 import models
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+
 
 class HBNBCommand(cmd.Cmd):
     """ command that interpreter class"""
 
     prompt = '(hbnb) '
-    valid_classes = ["BaseModel", "User"]
+    valid_classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def do_quit(self, arg):
         """The command that exit the program\n"""

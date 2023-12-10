@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-  BaseModel class defines a base model with common 
-  attributes and methodsfor other classes.
+BaseModel class defines a base model with common
+attributes and methodsfor other classes.
 """
 
 from uuid import uuid4
@@ -15,7 +15,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key in ['created_at', 'updated_at']:
-                        self.__dict__[key] = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                        self.__dict__[key] = datetime.strptime(
+                            value, "%Y-%m-%dT%H:%M:%S.%f")
                     else:
                         self.__dict__[key] = value
         else:
@@ -25,7 +26,8 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(
+            self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.now()

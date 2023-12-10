@@ -20,8 +20,8 @@ class TestBaseModel(unittest.TestCase):
     def test_base_model_str(self):
         """Test __str__ method of BaseModel."""
         new_model = BaseModel()
-        expected_str = "[BaseModel] ({}) {}".format(new_model.id, new_model.__dict__)
-        self.assertEqual(str(new_model), expected_str)
+        cr_str = "[BaseModel] ({}) {}".format(new_model.id, new_model.__dict__)
+        self.assertEqual(str(new_model), cr_str)
 
     def test_base_model_save(self):
         """Test save method of BaseModel."""
@@ -61,15 +61,15 @@ class TestBaseModel(unittest.TestCase):
         new_model = BaseModel(**data)
 
         # Convert the string representation to a datetime object
-        expected_created_at = datetime.strptime(data['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
+        crea_at = datetime.strptime(data['created_at'], "%Y-%m-%dT%H:%M:%S.%f")
 
         # Debugging print statements
         print(f"Actual created_at: {new_model.created_at}")
-        print(f"Expected created_at: {expected_created_at}")
+        print(f"Expected created_at: {crea_at}")
 
         # Check if attributes are set correctly
         self.assertEqual(new_model.id, 'test_id')
-        self.assertEqual(new_model.created_at, expected_created_at)
+        self.assertEqual(new_model.created_at, crea_at)
         self.assertEqual(new_model.updated_at, datetime(2023, 1, 1, 12, 30, 0))
         self.assertEqual(new_model.name, 'Test Model')
 

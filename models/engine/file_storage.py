@@ -14,16 +14,6 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    class_mapping = {
-        'BaseModel': BaseModel,
-        'User': User,
-        'State': State,
-        'City': City,
-        'Amenity': Amenity,
-        'Place': Place,
-        'Review': Review
-    }
-
     def all(self):
         """return the dictionary"""
         return self.__objects
@@ -49,7 +39,17 @@ class FileStorage:
                         class_name = obj_data['__class__']
                         del obj_data['__class__']
 
-                        obj_instance = self.class_mapping[class_name](**obj_data)
+                        class_mapping = {
+                            'BaseModel': BaseModel,
+                            'User': User,
+                            'State': State,
+                            'City': City,
+                            'Amenity': Amenity,
+                            'Place': Place,
+                            'Review': Review
+                        }
+
+                        obj_instance = class_mapping[class_name](**obj_data)
                         self.__objects[key] = obj_instance
         except FileNotFoundError:
             # File not found, no need for an error

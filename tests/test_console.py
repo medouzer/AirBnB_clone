@@ -81,7 +81,8 @@
 
 #     def test_help_update(self):
 #         h = ("Updates an instance by adding or updating attribute\n"
-#              "Usage: update <class name> <id> <attribute name> \"<attribute value>\"")
+#              "Usage: update <class name> <id>
+# <attribute name> \"<attribute value>\"")
 #         with patch("sys.stdout", new=StringIO()) as output:
 #             self.assertFalse(HBNBCommand().onecmd("help update"))
 #             self.assertEqual(h, output.getvalue().strip())
@@ -171,7 +172,8 @@
 #             for clas in valid_classes:
 #                 with patch('sys.stdout', new=StringIO()) as f:
 #                     expected = "** value missing **"
-#                     HBNBCommand().onecmd(f"{cmd} {clas} {id_dict[clas]} name")
+#                     HBNBCommand().onecmd(
+# f"{cmd} {clas} {id_dict[clas]} name")
 #                     self.assertCountEqual(expected, f.getvalue().strip())
 
 #         """ Testing Show Command """
@@ -201,7 +203,8 @@
 #         for cmd in cmds:
 #             with patch('sys.stdout', new=StringIO()) as f:
 #                 HBNBCommand().onecmd(f"{cmd}")
-#                 expected = ['[{}] {}'.format(k, v) for k, v in storage.all().items()]
+#                 expected = ['[{}] {}'.format(k, v)
+# for k, v in storage.all().items()]
 #                 self.assertEqual(expected, f.getvalue().strip())
 
 #         """ Testing Update Command """
@@ -210,12 +213,14 @@
 #         for cmd in cmds:
 #             for clas in valid_classes:
 #                 with patch('sys.stdout', new=StringIO()) as f:
-#                     HBNBCommand().onecmd(f"{cmd} {clas} {id_dict[clas]} name 'New Name'")
+#                     HBNBCommand().onecmd(
+# f"{cmd} {clas} {id_dict[clas]} name 'New Name'")
 #                     expected = 'New Name'
 #                     if clas == "User":
 #                         expected = "New Name"
 #                     # Add other expected outputs based on the class
-#                     self.assertEqual(expected, getattr(storage.all()[f"{clas}.{id_dict[clas]}"], "name"))
+#                     self.assertEqual(expected, getattr(storage.all()
+# [f"{clas}.{id_dict[clas]}"], "name"))
 
 # # ... (If you have other tests or code after this point)
 
@@ -304,8 +309,10 @@
 #             self.assertEqual(h, output.getvalue().strip())
 
 #     def test_help_update(self):
-#         h = ("Updates an instance by adding or updating attribute\n"
-#              "Usage: update <class name> <id><attribute name> \"<attribute value>\"")
+#         h = ("Updates an instance by
+# adding or updating attribute\n"
+#              "Usage: update <class name>
+# <id><attribute name> \"<attribute value>\"")
 #         with patch("sys.stdout", new=StringIO()) as output:
 #             self.assertFalse(HBNBCommand().onecmd("help update"))
 #             self.assertEqual(h, output.getvalue().strip())
@@ -395,7 +402,8 @@
 #             for clas in valid_classes:
 #                 with patch('sys.stdout', new=StringIO()) as f:
 #                     expected = "** value missing **"
-#                     HBNBCommand().onecmd(f"{cmd} {clas} {id_dict[clas]} name")
+#                     HBNBCommand().onecmd(
+# f"{cmd} {clas} {id_dict[clas]} name")
 #                     self.assertEqual(expected, f.getvalue().strip())
 
 #         """ Testing Show Command """
@@ -435,13 +443,14 @@
 #         for cmd in cmds:
 #             for clas in valid_classes:
 #                 with patch('sys.stdout', new=StringIO()) as f:
-#                     HBNBCommand().onecmd(f"{cmd} {clas}{id_dict[clas]} name 'New Name'")
+#                     HBNBCommand().onecmd(
+# f"{cmd} {clas}{id_dict[clas]} name 'New Name'")
 #                     expected = 'New Name'
 #                     if clas == "User":
 #                         expected = "New Name"
 #                     # Add other expected outputs based on the class
 #                     self.assertEqual(expected, getattr(storage.all()
-#                                                        [f"{clas}.{id_dict[clas]}"], "name"))
+#                               [f"{clas}.{id_dict[clas]}"], "name"))
 
 
 # if __name__ == '__main__':
@@ -460,6 +469,7 @@ from models.amenity import Amenity
 from models.review import Review
 from models import storage
 
+
 class TestHBNBCommandPrompt(unittest.TestCase):
     def test_prompt_string(self):
         self.assertEqual("(hbnb) ", HBNBCommand.prompt)
@@ -468,6 +478,7 @@ class TestHBNBCommandPrompt(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd(""))
             self.assertEqual("", output.getvalue().strip())
+
 
 class TestHBNBCommandHelp(unittest.TestCase):
     def test_help(self):
@@ -481,7 +492,6 @@ class TestHBNBCommandHelp(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("help"))
             self.assertEqual(expected_output, output.getvalue().strip())
 
-    # Add similar test methods for other help commands...
 
 class TestHBNBCommandErrors(unittest.TestCase):
     def test_class_name_missing(self):
@@ -492,9 +502,9 @@ class TestHBNBCommandErrors(unittest.TestCase):
                 HBNBCommand().onecmd(cmd)
                 self.assertEqual(expected, f.getvalue().strip())
 
-    # Add similar test methods for other error cases...
 
 class TestHBNBCommandCreateObject(unittest.TestCase):
+
     def test_create_object(self):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))

@@ -85,6 +85,22 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(reloaded_instance, BaseModel)
         self.assertEqual(reloaded_instance.to_dict(), new_instance.to_dict())
 
+    def test_reload_method_file_not_found(self):
+        """Test the reload() method when file not found"""
+        self.storage.all().clear()
+        self.storage.reload()
+        # file
+        with self.assertRaises(FileNotFoundError):
+            with open(FileStorage._FileStorage__file_path, 'r') as file:
+                json.load(file)
+
+    def test_reload_method_invalid_json(self):
+        """Test the reload() method with invalid JSON in file"""
+        if os.path.exists(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
+        self.assertFalse(os.path.exists(FileStorage._FileStorage__file_path))
+        models.storage.reload()
+
 
 if __name__ == '__main__':
     unittest.main()

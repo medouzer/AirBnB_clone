@@ -39,7 +39,7 @@ class FileStorage:
                         data = json.loads(file_content)
                         for key, obj_data in data.items():
                             class_name = obj_data['__class__']
-                            # del obj_data['__class__']
+                            del obj_data['__class__']
 
                             class_mapping = {
                                 'BaseModel': BaseModel,

@@ -22,7 +22,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    height: 400px;
+    height: 700px;
 }
 
 .places article h2 {
@@ -87,4 +87,46 @@
 .places .user,
 .places .description {
     text-align: left;
+}
+
+.places .amenities,
+.places .reviews {
+    margin-top: 40px;
+    text-align: left;
+}
+
+.places .amenities h2,
+.places .reviews h2 {
+    font-size: 16px;
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 10px;
+}
+
+.places .amenities ul,
+.places .reviews ul {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.places .amenities .tv {
+    background: url("../images/icon_tv.png") no-repeat;
+}
+
+.places .amenities .wifi {
+    background: url("../images/icon_wifi.png") no-repeat;
+}
+
+.places .amenities .pets {
+    background: url("../images/icon_pets.png") no-repeat;
+}
+
+.places .amenities .tv,
+.places .amenities .wifi,
+.places .amenities .pets {
+    background-size: 25px;
+    background-position: left;
+    padding-left: 40px;
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
